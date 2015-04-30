@@ -21,8 +21,8 @@ block_size = 40
 def game_over(score):
     lines = ["Game Over", "Score "+str(score), "Hit Space to play again"]
     for i in range(len(lines)):
-        # GET REKT!!
         text = font.render(lines[i], True, (200, 20, 20))
+        # GET REKT!!
         line_width = text.get_rect()[2]
         line_height = text.get_rect()[3]
         game_display.blit(text, [WIDTH/2-line_width/2, HEIGHT/2-line_height/2+font_size*i+3])
@@ -82,6 +82,11 @@ def start_game():
         if snake[-1][0] > WIDTH or snake[-1][0] < 0 or snake[-1][1] > HEIGHT or snake[-1][1] < 0:
             game_over(score)
             break
+        # Kolla om huvudet biter svansen
+        for block in snake[:-1]:
+            if snake[-1] == block:
+                game_over(score)
+                break
         # Kolla om ormens huvud är på samma plats som matbiten
         if snake[-1][0] == food[0] and snake[-1][1] == food[1]:
             snake.append((snake[-1][0]+change_x, snake[-1][1]+change_y))
